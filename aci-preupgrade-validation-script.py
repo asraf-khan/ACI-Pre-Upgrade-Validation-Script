@@ -3905,6 +3905,7 @@ def multisite_dptep_routable_subnet_overlap_check(**kwargs):
             net_start = start_ip & mask
             net_end = net_start | ((~mask) & 0xFFFFFFFF)
             reserve = int(attrs.get('reserveAddressCount', '0') or '0')
+            print("\nExt Routable Pool: {}, reserve: {}\n".format(pool, reserve))
         except (ValueError, TypeError):
             continue
         unr_lo = net_start + reserve
@@ -3919,6 +3920,7 @@ def multisite_dptep_routable_subnet_overlap_check(**kwargs):
     def _append_if_overlap(attrs, label):
         addr_str = attrs.get("addr", "")
         ip_only = addr_str.split("/")[0]
+        print("\nChecking {} IP address: {}\n".format(label, addr_str))
         if not ip_only or ":" in ip_only:
             return
         try:
@@ -6960,6 +6962,7 @@ class CheckManager:
         wred_affected_model_check,
         n9k_c93180yc_fx3_switch_memory_check,
         stale_dbgacEpgSummaryTask_check,
+        multisite_dptep_routable_subnet_overlap_check,
 
     ]
     ssh_checks = [
